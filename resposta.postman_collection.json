@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "7cedb68d-78b0-4de2-aa54-c2fa8b03b601",
+		"name": "resposta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin/api/user/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{admin-api-user-url}}/list",
+					"host": [
+						"{{admin-api-user-url}}"
+					],
+					"path": [
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/api/user/list-horizontal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{admin-api-user-url}}/list-horizontal",
+					"host": [
+						"{{admin-api-user-url}}"
+					],
+					"path": [
+						"list-horizontal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/api/user/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Dummy",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "dummy@dummy.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "dummy",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{admin-api-user-url}}/create",
+					"host": [
+						"{{admin-api-user-url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/api/user/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{admin-api-user-url}}/destroy/2",
+					"host": [
+						"{{admin-api-user-url}}"
+					],
+					"path": [
+						"destroy",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/api/user/edit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Dummy",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "dummy@dummy.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "a",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{admin-api-user-url}}/edit/1?_method=PUT",
+					"host": [
+						"{{admin-api-user-url}}"
+					],
+					"path": [
+						"edit",
+						"1"
+					],
+					"query": [
+						{
+							"key": "_method",
+							"value": "PUT"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{admin-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add(\"Accept: application/json\")",
+					"",
+					"if (![\"GET\", \"HEAD\"].some(v => v === pm.request.method)) {",
+					"    pm.sendRequest({",
+					"        url: pm.collectionVariables.get(\"base-url\") + \"/sanctum/csrf-cookie\",",
+					"        method: \"GET\"",
+					"    }, (err, res, { cookies }) => {",
+					"        pm.request.headers.add(\"X-XSRF-TOKEN: \" + cookies.get('XSRF-TOKEN'))",
+					"    })",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "https://floating-island-97183.herokuapp.com",
+			"type": "default"
+		},
+		{
+			"key": "admin-api-user-url",
+			"value": "{{base-url}}/admin/api/user",
+			"type": "default"
+		},
+		{
+			"key": "admin-token",
+			"value": "1|WGTn03NTduQTJxMr03E5MJ29BRNd04uvERVrlhqN",
+			"type": "default"
+		}
+	]
+}
